@@ -38,6 +38,7 @@ if(ROS_EDITION STREQUAL "ROS1")
     message_generation
     rosbag
     pcl_ros
+    message_filters
   )
 
   ## Find pcl lib
@@ -73,7 +74,7 @@ if(ROS_EDITION STREQUAL "ROS1")
   ## DEPENDS: system dependencies of this project that dependent projects also n    eed
   catkin_package(CATKIN_DEPENDS
     roscpp rospy std_msgs message_runtime
-    pcl_ros
+    pcl_ros message_filters
   )
 
   #---------------------------------------------------------------------------------------
@@ -103,6 +104,13 @@ if(ROS_EDITION STREQUAL "ROS1")
   add_executable(${PROJECT_NAME}_node
     ""
   )
+
+  include_directories(
+  ${catkin_INCLUDE_DIRS}
+  )
+  
+  add_executable(sync_node src/sync_node.cpp)
+  target_link_libraries(sync_node ${catkin_LIBRARIES})
 
   #---------------------------------------------------------------------------------------
   # precompile macro and compile option
